@@ -5,7 +5,7 @@ use crate::{prelude::*, Hasher};
 use tiny_keccak::{Hasher as KeccakHasher, Keccak};
 
 #[cfg(feature = "keccak256")]
-#[derive(Clone)]
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
 pub struct Keccak256Algorithm {}
 
 #[cfg(feature = "keccak256")]

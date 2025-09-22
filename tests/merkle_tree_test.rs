@@ -8,6 +8,12 @@ pub mod root {
     };
 
     #[test]
+    fn test_ser() {
+        let merkle_tree = MerkleTree::<Sha256>::new();
+        let bytes = rmp_serde::to_vec_named(&merkle_tree).unwrap();
+    }
+
+    #[test]
     pub fn should_return_a_correct_root() {
         let test_data = common::setup();
         let merkle_tree = MerkleTree::<Sha256>::from_leaves(&test_data.leaf_hashes);

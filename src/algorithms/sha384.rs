@@ -56,7 +56,7 @@ impl TryFrom<Vec<u8>> for Hash {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
 pub struct Sha384Algorithm {}
 
 impl Hasher for Sha384Algorithm {
