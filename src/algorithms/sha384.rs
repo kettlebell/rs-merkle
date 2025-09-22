@@ -1,8 +1,12 @@
+use core::convert::TryFrom;
+
 //
 // sha384.rs
 // Author imotai <codego.me@gmail.com>
 //
 use crate::{prelude::*, Hasher};
+use serde_with::serde_as;
+use serde_with::Bytes;
 use sha2::{digest::FixedOutput, Digest, Sha384};
 
 /// Sha384 implementation of the [`Hasher`] trait.
@@ -32,15 +36,36 @@ use sha2::{digest::FixedOutput, Digest, Sha384};
 /// ```
 ///
 /// [`Hasher`]: crate::Hasher
+///
+
+#[serde_as]
+#[derive(serde::Serialize, serde::Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Hash(#[serde_as(as = "Bytes")] pub [u8; 48]);
+
+impl From<Hash> for Vec<u8> {
+    fn from(val: Hash) -> Self {
+        val.0.to_vec()
+    }
+}
+
+impl TryFrom<Vec<u8>> for Hash {
+    type Error = Vec<u8>;
+
+    fn try_from(value: Vec<u8>) -> Result<Self, Self::Error> {
+        todo!()
+    }
+}
+
 #[derive(Clone)]
 pub struct Sha384Algorithm {}
 
 impl Hasher for Sha384Algorithm {
-    type Hash = [u8; 48];
+    type Hash = Hash;
 
-    fn hash(data: &[u8]) -> [u8; 48] {
+    fn hash(data: &[u8]) -> Hash {
         let mut hasher = Sha384::new();
         hasher.update(data);
-        <[u8; 48]>::from(hasher.finalize_fixed())
+        let inner = <[u8; 48]>::from(hasher.finalize_fixed());
+        Hash(inner)
     }
 }

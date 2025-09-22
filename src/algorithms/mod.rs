@@ -8,6 +8,7 @@ mod sha384;
 mod keccak256;
 
 pub use sha256::Sha256Algorithm as Sha256;
+pub use sha384::Hash as Hash48;
 pub use sha384::Sha384Algorithm as Sha384;
 
 #[cfg(feature = "keccak256")]

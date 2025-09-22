@@ -2,7 +2,7 @@ use rayon::prelude::*;
 #[cfg(feature = "keccak256")]
 use rs_merkle::algorithms::Keccak256;
 use rs_merkle::{
-    algorithms::{Sha256, Sha384},
+    algorithms::{Hash48, Sha256, Sha384},
     Hasher, MerkleTree,
 };
 
@@ -15,7 +15,7 @@ pub struct TestData {
 pub struct TestData48 {
     pub leaf_values: Vec<String>,
     pub expected_root_hex: String,
-    pub leaf_hashes: Vec<[u8; 48]>,
+    pub leaf_hashes: Vec<Hash48>,
 }
 
 pub struct TestDataKeccak256 {
